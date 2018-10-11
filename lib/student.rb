@@ -14,7 +14,7 @@ class Student
     # retrieve all the rows from the "Students" database
     # remember each row should be a new instance of the Student class
     sql = <<-SQL
-      SELECT * 
+      SELECT *
       FROM students
       SQL
     DB[:conn].execute(sql).map{|row| self.new_from_db(row)}
@@ -24,23 +24,23 @@ class Student
     # find the student in the database given a name
     # return a new instance of the Student class
     sql = <<-SQL
-      SELECT * 
+      SELECT *
       FROM students
       WHERE name = ?
       LIMIT 1
       SQL
     DB[:conn].execute(sql, name).map{|row| self.new_from_db(row)}.first
   end
-  
+
   def save
     sql = <<-SQL
-      INSERT INTO students (name, grade) 
+      INSERT INTO students (name, grade)
       VALUES (?, ?)
     SQL
 
     DB[:conn].execute(sql, self.name, self.grade)
   end
-  
+
   def self.create_table
     sql = <<-SQL
     CREATE TABLE IF NOT EXISTS students (
